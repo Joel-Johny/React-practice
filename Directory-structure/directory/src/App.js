@@ -1,23 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { structure } from "./utils/data";
 
+const PrintLevel = ({ type, name }) => {
+  let icon=""
+  if (type == "folder")
+    icon="📁"
+  else
+    icon="📝"
+
+   return (
+   <div className="container">
+      {icon}
+      {name}
+   </div>
+   );
+};
+const HandleLevel = ({ level }) => {
+
+  const { type, name } = level;
+  return (
+    <div>
+      <PrintLevel type={type} name={name} />
+
+      {
+      (type=="folder" && level.nest!=="undefined" && level.nest.length>0) && (
+        <div className="nested">
+            {
+              level.nest.map((eachLevel)=>{
+                  return <HandleLevel level={eachLevel}/>
+
+              })
+            }
+        </div>
+      )
+    
+    }
+    </div>
+
+  
+  )
+};
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {structure.map((level) => {
+        return <HandleLevel level={level} />;
+      })}
     </div>
   );
 }
