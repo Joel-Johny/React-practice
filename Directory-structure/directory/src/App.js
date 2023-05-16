@@ -1,19 +1,31 @@
 import React from "react";
 import "./App.css";
 import { useContext } from "react";
-import folderStructure from "./utils/context";
+import {FolderContext,FolderProvider} from "./utils/context"
 import HandleLevel from "./Components/HandleLevel";
+
 function App() {
   
-  const structure1=useContext(folderStructure)
+  const { state,dispatch } = useContext(FolderContext);
+  console.log(state)
   return (
     
     <div className="App">
-      {structure1.map((level,index) => {
+      {state.map((level,index) => {
         return <HandleLevel key={index} level={level}  />;
       })}
     </div>
   );
 }
 
-export default App;
+function AppWrapper(){
+
+  return (
+    <FolderProvider>
+      <App/>
+    </FolderProvider>
+
+  )
+}
+
+export default AppWrapper;
