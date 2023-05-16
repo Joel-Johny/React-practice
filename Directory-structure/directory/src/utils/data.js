@@ -18,7 +18,7 @@ export const structure = [
           nest:[
             {
               id:4,
-              type:'file',
+              type:'folder',
               name:'child with id 4',
 
             }

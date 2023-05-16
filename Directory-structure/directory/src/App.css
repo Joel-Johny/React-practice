@@ -5,8 +5,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
+  font-size: xx-large;
 }
 
 .nested{
@@ -15,7 +15,27 @@ body {
 .container{
   background-color: inherit;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 350px;
+  margin: 0.5rem;
 }
 .container:hover{
   background-color: rgb(96, 93, 93);
+}
+.icon-container{
+  display: flex;
+  gap:0.5rem
+}
+.icon{
+  width: 28px;
+  height: 28px;
+  
+}
+.details{
+  width: 100%;
+}
+.icon:hover{
+  border: 1px solid white;
 }
