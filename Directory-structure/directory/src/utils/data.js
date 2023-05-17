@@ -20,10 +20,10 @@ export const structure = [
               id:4,
               type:'folder',
               name:'child with id 4',
-
+              nest:[]
             }
           ]
-        }
+        },
       ]
     },
     {

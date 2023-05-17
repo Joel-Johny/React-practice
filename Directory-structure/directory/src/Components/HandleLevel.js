@@ -17,14 +17,14 @@ const PrintLevel = ({ type, name,id }) => {
           {name}
         </div>
   
-        <div className="icon-container">
+        {name!=="root" && name!=="root friend" &&<div className="icon-container">
           <img className="icon" src="/del.png" alt="del" onClick={()=>{
             dispatch(              {type:"DELETE_LEVEL", id : id}              )
             }} />
           <img className="icon" src="/add.png" alt="add" onClick={()=>{
             dispatch({type:"ADD_LEVEL", id : id})
           }}></img>
-        </div>
+        </div>}
      </div>
      );
   };
