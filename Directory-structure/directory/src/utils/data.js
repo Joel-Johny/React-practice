@@ -1,6 +1,6 @@
 export const structure = [
     {
-      id:1,
+      id:"root-1",
       type:'folder',
       name:'root',
       nest:[

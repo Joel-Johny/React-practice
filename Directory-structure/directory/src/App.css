@@ -20,6 +20,7 @@ body {
   align-items: center;
   width: 350px;
   margin: 0.5rem;
+  padding: 0.5rem;
 }
 .container:hover{
   background-color: rgb(96, 93, 93);

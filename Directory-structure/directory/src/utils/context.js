@@ -7,25 +7,28 @@ const folderReducer = (state, action) => {
   const ID=action.id
   const new_state=JSON.parse(JSON.stringify(state))
 
-  function parentFinder(parent) {
-    for (const childObj of parent.nest) {
-      if (childObj.id == ID) {
-         parentId=parent.id;
-         return ;
-      }
-      if (childObj.type === "folder" && childObj.nest !== undefined) {
-        parentFinder(childObj); // Pass the entire child object
-      }
-    };
-  }
+  // function parentFinder(parent) {
+  //   if(ID===parent.id){
+  //     return ;
+  //   }
+  //   for (const childObj of parent.nest) {
+  //     if (childObj.id == ID) {
+  //        parentId=parent.id;
+  //        return ;
+  //     }
+  //     if (childObj.type === "folder" && childObj.nest !== undefined) {
+  //       parentFinder(childObj); // Pass the entire child object
+  //     }
+  //   };
+  // }
   
  
 
-  let parentId = 1
-  new_state.forEach((object) => {
-    if (object.type === "folder")
-      parentFinder(object);
-  });
+  // let parentId = "root-1"
+  // new_state.forEach((object) => {
+  //   if (object.type === "folder")
+  //     parentFinder(object);
+  // });LOgic to find parent of any object
   
   switch (action.type) {
     case "DELETE_LEVEL":
@@ -40,16 +43,16 @@ const folderReducer = (state, action) => {
            return ;
            
         }
-        if (childObj.type === "folder" && childObj.nest !== undefined) {
+        if (childObj.type === "folder" && childObj.nest !== undefined) 
           deleter(childObj); // Pass the entire child object
-        }
+        
         index=index+1;
       };
      
     }
     new_state.forEach((object) => {
       if (object.type === "folder"){
-      deleter(object);
+        deleter(object);
       }
       })
     
@@ -60,13 +63,36 @@ const folderReducer = (state, action) => {
 
     case "ADD_LEVEL":
       // Implement your add logic here
+      // console.log("Parent of id ",ID ," is ",parentId)
+      function adder(parent) {
+        if(ID===parent.id){
+          parent.nest.push(addObject)
+          return ;
+        }
+        for (const childObj of parent.nest) {
+          if (childObj.type === "folder" && childObj.nest !== undefined) {
+            adder(childObj); // Pass the entire child object
+          }
+        };
+      }
+      const addObject={
+        id:9,
+        name:"Joel",
+        type:"folder",
+        nest:[{
+          id:99,
+          name:"Johny",
+          type:"file"
+        }]
+      }
+      new_state.forEach((object) => {
+        if (object.type === "folder")
+          adder(object);
+      });
 
-      return [
-        ...state,
-        // updated state after addition
-      ];
+      return new_state;
     default:
-      return state;
+      return new_state;
   }
 };
 
