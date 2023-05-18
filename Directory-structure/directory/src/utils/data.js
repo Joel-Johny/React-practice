@@ -6,9 +6,17 @@ export const structure = [
       nest:[
         {
           id:2,
-          type:'file',
+          type:'folder',
           name:'child with id 2',
 
+          nest:[
+            {
+              id:22,
+              type:'folder',
+              name:'child with id 22',
+              nest:[]
+            }
+          ]
         },
         {
           id:3,
@@ -17,19 +25,43 @@ export const structure = [
 
           nest:[
             {
-              id:4,
+              id:33,
               type:'folder',
-              name:'child with id 4',
+              name:'child with id 33',
               nest:[]
             }
           ]
         },
+        {
+          id:4,
+          type:'folder',
+          name:'child with id 4',
+
+          nest:[
+            {
+              id:44,
+              type:'folder',
+              name:'child with id 44',
+              nest:[]
+            }
+          ]
+        },
+        {
+          id:5,
+          type:'folder',
+          name:'child with id 5',
+
+          nest:[
+            {
+              id:55,
+              type:'folder',
+              name:'child with id 55',
+              nest:[]
+            }
+          ]
+        }
       ]
     },
-    {
-      id:23,
-      type:'file',
-      name:'root friend'
-    },
+
   
   ]

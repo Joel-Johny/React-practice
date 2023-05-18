@@ -6,7 +6,7 @@ import HandleLevel from "./Components/HandleLevel";
 
 function App() {
   
-  const { state,dispatch } = useContext(FolderContext);
+  const { state } = useContext(FolderContext);
   return (
     
     <div className="App">

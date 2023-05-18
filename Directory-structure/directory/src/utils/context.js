@@ -31,18 +31,19 @@ const folderReducer = (state, action) => {
     case "DELETE_LEVEL":
 
     function deleter(parent) {
+      let index=0;
       for (const childObj of parent.nest) {
-        let count=0;
         if (childObj.id == ID) {
            console.log("deleting child with id ",childObj.id)
-           parent.nest.splice(count,1)
-           return parent
+           parent.nest.splice(index,1)
+           console.log("now the parent-child nodelist looks like this",parent)
+           return ;
            
         }
         if (childObj.type === "folder" && childObj.nest !== undefined) {
           deleter(childObj); // Pass the entire child object
         }
-        count=count+1;
+        index=index+1;
       };
      
     }
@@ -54,10 +55,9 @@ const folderReducer = (state, action) => {
     
   
 
-      return [
-        ...new_state,
-        // updated state after deletion
-  ];
+      return new_state
+  
+
     case "ADD_LEVEL":
       // Implement your add logic here
 
