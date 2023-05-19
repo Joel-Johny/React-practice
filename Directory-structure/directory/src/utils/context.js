@@ -37,9 +37,9 @@ const folderReducer = (state, action) => {
       let index=0;
       for (const childObj of parent.nest) {
         if (childObj.id == ID) {
-           console.log("deleting child with id ",childObj.id)
+          //  console.log("deleting child with id ",childObj.id,"THis was deleted : ",childObj)
            parent.nest.splice(index,1)
-           console.log("now the parent-child nodelist looks like this",parent)
+          //  console.log("now the parent-child nodelist looks like this",parent)
            return ;
            
         }
@@ -66,6 +66,7 @@ const folderReducer = (state, action) => {
       // console.log("Parent of id ",ID ," is ",parentId)
       function adder(parent) {
         if(ID===parent.id){
+          // console.log("CLicked was : ",ID,"Pushing into id : ",parent.id )
           parent.nest.push(addObject)
           return ;
         }
@@ -76,15 +77,20 @@ const folderReducer = (state, action) => {
         };
       }
       const addObject={
-        id:9,
-        name:"Joel",
-        type:"folder",
-        nest:[{
-          id:99,
-          name:"Johny",
-          type:"file"
-        }]
+       ...action.payload,
       }
+      // const addObject={
+      //   id:9,
+      //   name:"Joel",
+      //   type:"folder",
+      //   nest:[{
+      //     id:99,
+      //     name:"Johny",
+      //     type:"file"
+      //   }]
+      // }
+
+      // console.log("object Received",addObject)
       new_state.forEach((object) => {
         if (object.type === "folder")
           adder(object);

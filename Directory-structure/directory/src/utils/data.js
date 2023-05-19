@@ -59,6 +59,11 @@ export const structure = [
               nest:[]
             }
           ]
+        },
+        {
+          id:6,
+          type:'file',
+          name:'child with id 6',
         }
       ]
     },
