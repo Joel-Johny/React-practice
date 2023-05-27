@@ -5,8 +5,8 @@ import "./App.css";
 function App() {
   const game = ["cricket", "hockey", "football"];
   const days = ["weekend", "weekday"];
-  const [gameState,setGame]=useState("")
-  const [dayState,setDay]=useState("")
+  const [gameState,setGame]=useState('hockey')
+  const [dayState,setDay]=useState("weekday")
   
   return (
     <>
@@ -15,7 +15,7 @@ function App() {
         {game.map((game) => {
           return (
             <span key={game}>
-              <input type="radio" id={game} name="game" value={game} onClick={(e)=>{setGame(e.target.value)}}/>
+              <input type="radio" id={game} name="game" value={game} checked={gameState==game} onClick={(e)=>{setGame(e.target.value)}}/>
               <label htmlFor={game}>{game}</label>
             </span>
           );
@@ -26,7 +26,7 @@ function App() {
       <div className="day">
         {days.map((day)=>{
             return (<span key={day}>
-                <input type="radio" name="day" id={day} value={day}  onClick={(e)=>{setDay(e.target.value)}}/>
+                <input type="radio" name="day" id={day} value={day}  onClick={(e)=>{setDay(e.target.value)}} checked={dayState==day}/>
                 <label htmlFor={day}>{day}</label>
             </span>)
         })}
