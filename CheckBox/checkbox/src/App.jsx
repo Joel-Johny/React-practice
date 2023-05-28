@@ -11,6 +11,8 @@ function App() {
     console.log("deleting now",index)
     const newTask=[...tasks]
     newTask.splice(index,1)
+    console.log("deleted",newTask)
+
     setTasks(newTask)
   }
   return (
