@@ -1,19 +1,20 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0.5rem;
   text-align: center;
 }
 .containers{
   display: flex;
   flex-direction: column;
-  gap:25px
+  max-width: 800px ;
 }
 .full-container{
   display:flex;
   flex-direction: column;
   gap: 20px;
 }
+
 .taskItem{
   display: flex;
   padding: 15px;
