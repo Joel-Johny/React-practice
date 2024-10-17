@@ -10,14 +10,23 @@ function ControlledFormSingleState() {
     hobbies: [],
     country: "",
   });
-  const countries = ['USA','UK','INDIA']
-  const hobbies = ['cricket','music','chess']
+
+  const [errors, setErrors] = useState({}); // Validation error state
+
+  const countries = ['USA', 'UK', 'INDIA'];
+  const hobbies = ['cricket', 'music', 'chess'];
+
+  // Handle change and validate in real-time
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    
+    // Update form state
     if (type === "checkbox") {
       setFormData((prevState) => ({
         ...prevState,
-        hobbies: checked? [...prevState.hobbies, name]:prevState.hobbies.filter((hobby) => hobby !== name),
+        hobbies: checked
+          ? [...prevState.hobbies, name]
+          : prevState.hobbies.filter((hobby) => hobby !== name),
       }));
     } else {
       setFormData((prevState) => ({
@@ -25,6 +34,33 @@ function ControlledFormSingleState() {
         [name]: value,
       }));
     }
+
+    // Validate the field in real-time
+    validateField(name, value);
+  };
+
+  const validateField = (name, value) => {
+    let error = {};
+    switch (name) {
+      case "firstName":
+        error[name] = value ? "" : "First name is required";
+        break;
+      case "lastName":
+        error[name] = value ? "" : "Last name is required";
+        break;
+      case "age":
+        error[name] = value && value > 0 ? "" : "Please enter a valid age";
+        break;
+      case "country":
+        error[name] = value ? "" : "Please select a country";
+        break;
+      default:
+        break;
+    }
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      ...error,
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -42,6 +78,7 @@ function ControlledFormSingleState() {
           value={formData.firstName}
           onChange={handleChange}
         />
+        {errors.firstName && <span className="error">{errors.firstName}</span>}
       </div>
       <div>
         <label>Last Name:</label>
@@ -51,6 +88,7 @@ function ControlledFormSingleState() {
           value={formData.lastName}
           onChange={handleChange}
         />
+        {errors.lastName && <span className="error">{errors.lastName}</span>}
       </div>
       <div>
         <label>Age:</label>
@@ -60,6 +98,7 @@ function ControlledFormSingleState() {
           value={formData.age}
           onChange={handleChange}
         />
+        {errors.age && <span className="error">{errors.age}</span>}
       </div>
       <div>
         <label>Gender:</label>
@@ -80,47 +119,45 @@ function ControlledFormSingleState() {
         />{" "}
         Female
       </div>
-      <div>        <label>Hobbies:</label>
-
-        {hobbies.map((hobby)=>{
-          return(
-            <div key={hobby}>
-              <input
-                type="checkbox"
-                name={hobby}
-                checked={formData.hobbies.includes(hobby)}
-                onChange={handleChange}
-              />
-              {hobby}
-            </div>
-          )
-        })}
-
+      <div>
+        <label>Hobbies:</label>
+        {hobbies.map((hobby) => (
+          <div key={hobby}>
+            <input
+              type="checkbox"
+              name={hobby}
+              checked={formData.hobbies.includes(hobby)}
+              onChange={handleChange}
+            />
+            {hobby}
+          </div>
+        ))}
       </div>
       <div>
         <label>Country:</label>
         <select name="country" value={formData.country} onChange={handleChange}>
-        <option value="">Select a country</option>
-
-            {countries.map((country)=>{
-              return(
-                <option key={country} value={country}>{country}</option>
-              )
-            })}
+          <option value="">Select a country</option>
+          {countries.map((country) => (
+            <option key={country} value={country}>
+              {country}
+            </option>
+          ))}
         </select>
+        {errors.country && <span className="error">{errors.country}</span>}
       </div>
       <button type="submit">Submit</button>
     </form>
   );
 }
 
+
+
 function UncontrolledFormSingleRef() {
   const formRef = useRef();
+  const [errors, setErrors] = useState({}); // Validation error state
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // formRef.current fetches me the form element then using .name.value will get me the value
-    console.log(formRef.current.hobbiesMusic)
     const formData = {
       firstName: formRef.current.firstName.value,
       lastName: formRef.current.lastName.value,
@@ -133,7 +170,22 @@ function UncontrolledFormSingleRef() {
       country: formRef.current.country.value,
     };
 
-    console.log(formData);
+    // Validate the form data
+    const newErrors = validateForm(formData);
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      console.log(formData);
+    }
+  };
+
+  const validateForm = (data) => {
+    let errors = {};
+    if (!data.firstName) errors.firstName = "First name is required";
+    if (!data.lastName) errors.lastName = "Last name is required";
+    if (!data.age || data.age <= 0) errors.age = "Please enter a valid age";
+    if (!data.country) errors.country = "Please select a country";
+    return errors;
   };
 
   return (
@@ -141,14 +193,17 @@ function UncontrolledFormSingleRef() {
       <div>
         <label>First Name:</label>
         <input type="text" name="firstName" />
+        {errors.firstName && <span className="error">{errors.firstName}</span>}
       </div>
       <div>
         <label>Last Name:</label>
         <input type="text" name="lastName" />
+        {errors.lastName && <span className="error">{errors.lastName}</span>}
       </div>
       <div>
         <label>Age:</label>
         <input type="number" name="age" />
+        {errors.age && <span className="error">{errors.age}</span>}
       </div>
       <div>
         <label>Gender:</label>
@@ -167,6 +222,7 @@ function UncontrolledFormSingleRef() {
           <option value="Canada">Canada</option>
           <option value="UK">UK</option>
         </select>
+        {errors.country && <span className="error">{errors.country}</span>}
       </div>
       <button type="submit">Submit</button>
     </form>
